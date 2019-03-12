@@ -1,3 +1,29 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from .models import Article
+from .forms import ArticlePostForm
 
-# Create your views here.
+
+def article_create(request):
+    """
+    创建博客文章
+    """
+    # 判断用户是否提交了数据
+    if request.method == 'POST':
+        # 将提交的数据赋值到表单实例中
+        atricle_post_form = ArticlePostForm(request.POST)
+        # 判断提交数据是否合法
+        if atricle_post_form.is_valid():
+            atricle_post_form.save()
+            return HttpResponse('数据已保存成功！')
+        else:
+            return HttpResponse('表单内容有误，请重新填写！')
+    # 如果用户请求获取数据
+    else:
+        atricle_post_form = ArticlePostForm()
+        content = {'atricle_post_form': atricle_post_form}
+        return render(request, 'article/create.html', content)
+
+
+
+
