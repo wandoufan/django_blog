@@ -26,5 +26,15 @@ def article_create(request):
         return render(request, 'article/create.html', content)
 
 
+def article_list(request):
+    """
+    查询博客文章
+    """
+    # 判断用户是否提交了数据
+    if request.method == 'POST':
+        query_title = request.POST.get['title']
+        return HttpResponse('查询内容：', query_title)
+    else:
+        return HttpResponse('没有使用POST方法')
 
 
