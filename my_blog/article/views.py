@@ -35,6 +35,6 @@ def article_query(request):
         query_title = request.POST.get['title']
         return HttpResponse('查询内容：', query_title)
     else:
-        return HttpResponse('没有使用POST方法')
+        return render(request, 'article/query.html')
 
 

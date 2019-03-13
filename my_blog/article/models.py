@@ -10,8 +10,6 @@ class Article(models.Model):
     """
     定义博客中文章的属性
     """
-    # 文章ID
-    article = models.AutoField()
     # 文章标题
     title = models.CharField(max_length=150)
     # 文章作者
