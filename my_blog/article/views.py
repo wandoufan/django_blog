@@ -26,7 +26,7 @@ def article_create(request):
         return render(request, 'article/create.html', content)
 
 
-def article_list(request):
+def article_query(request):
     """
     查询博客文章
     """
