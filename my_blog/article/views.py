@@ -17,7 +17,8 @@ def article_create(request):
             atricle_post_form.save()
             return HttpResponse('数据已保存成功！')
         else:
-            return HttpResponse('表单内容有误，请重新填写！')
+            # 报错并返回错误原因
+            return HttpResponse('表单内容有误，请重新填写！', atricle_post_form.errors)
     # 如果用户请求获取数据
     else:
         atricle_post_form = ArticlePostForm()

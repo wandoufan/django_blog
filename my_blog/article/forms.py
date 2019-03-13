@@ -5,9 +5,11 @@ from .models import Article
 
 
 # 文章的表单类
-class ArticlePostForm(forms.Form):
+class ArticlePostForm(forms.ModelForm):
     class Meta:
         # 指明数据模型来源
         model = Article
-        # fields = ('title', 'author', 'body', 'created')
-        fields = ('title', 'body', 'created')
+        # 指明从html表单中返回的字段
+        # fields = '__all__'
+        fields = ('title', 'body')
+        
