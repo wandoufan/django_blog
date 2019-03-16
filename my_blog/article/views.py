@@ -95,4 +95,4 @@ def article_list(request):
         info_dict = {'id': article.id, 'title': article.title, 'body': article.body, 'created': article.created}
         info_list.append(info_dict)
     info = '所有博客文章如下所示：'
-    return render(request, 'article/list.html', {'info_list': info_list, 'info': 'info'})
+    return render(request, 'article/list.html', {'info_list': info_list, 'info': info})
