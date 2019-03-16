@@ -83,3 +83,16 @@ def article_update(request):
             return render(request, 'article/show.html', {'article_list': article_list, 'info': info})
     else:
         return render(request, 'article/update.html')
+
+
+def article_list(request):
+    """
+    显示所有的博客文章
+    """
+    article_list = Article.objects.all()
+    info_list = []
+    for article in article_list:
+        info_dict = {'id': article.id, 'title': article.title, 'body': article.body, 'created': article.created}
+        info_list.append(info_dict)
+    info = '所有博客文章如下所示：'
+    return render(request, 'article/list.html', {'info_list': info_list, 'info': 'info'})

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>豌豆帆 展示所有文章</title>
+</head>
+<body>
+<p>{{info}}</p>
+
+{% for info in info_list %}
+<p>文章id：{{info.id}}</p>
+<p>文章标题：{{info.title}}</p>
+<p>文章内容：{{info.body}}</p>
+<p>创建时间：{{info.created}}</p>
+{% endfor %}
+</body>
+</html>
