@@ -51,10 +51,11 @@ def article_delete(request):
     """
     if request.method == 'POST':
         delete_id = request.POST.get('id', 0)
-        article = Article.objects.get(id=delete_id, 0)
-        if article == 0:
+        article_list = Article.objects.filter(id = delete_id)
+        if len(article_list) == 0:
             return HttpResponse('没有查到id为 %s 的文章' %str(delete_id))
         else:
+            article = article_list[0]
             article.delete()
             return HttpResponse('标题为 %s 的文章删除成功' %article.title)
     else:
