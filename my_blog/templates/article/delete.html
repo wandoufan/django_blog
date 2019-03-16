@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>豌豆帆 删除文章页面</title>
+</head>
+<body>
+<!-- 删除表单 -->
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <br>
+            <!-- 删除文章的表单 -->
+            <form method="post" action="." enctype="multipart/form-data">
+                <!-- Django中需要POST数据的地方都必须有csrf_token -->
+                {% csrf_token %}
+
+                <!-- 标题 -->
+                <div class="form-group">
+                    <!-- 标签 -->
+                    <label for="id">输入要删除的文章的id</label>
+                    <!-- 文本框 -->
+                    <input type="text" 
+                           class="form-control" 
+                           id="id" 
+                           name="id"
+                    >
+                </div>
+                <!-- 提交按钮 -->
+                <button type="submit" class="btn btn-primary">完成</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

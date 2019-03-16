@@ -45,3 +45,17 @@ def article_query(request):
         return render(request, 'article/query.html')
 
 
+def article_delete(request):
+    """
+    删除博客文章
+    """
+    if request.method == 'POST':
+        delete_id = request.POST.get('id', 0)
+        article = Article.objects.get(id=delete_id, 0)
+        if article == 0:
+            return HttpResponse('没有查到id为 %s 的文章' %str(delete_id))
+        else:
+            article.delete()
+            return HttpResponse('标题为 %s 的文章删除成功' %article.title)
+    else:
+        return render(request, 'article/delete.html')
