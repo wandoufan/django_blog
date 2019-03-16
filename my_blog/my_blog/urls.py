@@ -23,4 +23,5 @@ urlpatterns = [
     path('article-create/', views.article_create, name='article_create'),
     path('article-query/', views.article_query, name='article_query'),
     path('article-delete/', views.article_delete, name='article_delete'),
+    path('article-update/', views.article_update, name='article_update'),
 ]
