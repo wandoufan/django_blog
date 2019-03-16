@@ -76,8 +76,8 @@ def article_update(request):
             return HttpResponse('没有查到id为 %s 的文章' % str(update_id))
         else:
             article = article_list[0]
-            article.title = update_title if update_title != 0 else article.title
-            article.body = update_body if update_body != 0 else article.body
+            article.title = update_title if update_title != '' else article.title
+            article.body = update_body if update_body != '' else article.body
             article.save()
             info = '修改id为 %s 的文章' % str(update_id)
             return render(request, 'article/show.html', {'article_list': article_list, 'info': info})
