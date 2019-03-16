@@ -73,7 +73,7 @@ def article_update(request):
         update_body = request.POST.get('body', 0)
         article_list = Article.objects.filter(id=update_id)
         if len(article_list) == 0:
-            request HttpResponse('没有查到id为 %s 的文章' % str(update_id))
+            return HttpResponse('没有查到id为 %s 的文章' % str(update_id))
         else:
             article = article_list[0]
             article.title = update_title if update_title != 0 else article.title
@@ -82,4 +82,4 @@ def article_update(request):
             info = '修改id为 %s 的文章' % str(update_id)
             return render(request, 'article/show.html', {'article_list': article_list, 'info': info})
     else:
-        return render(request, 'article/delete.html')
+        return render(request, 'article/update.html')
