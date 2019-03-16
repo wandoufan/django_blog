@@ -18,7 +18,7 @@ def article_create(request):
             return HttpResponse('数据已保存成功！')
         else:
             # 报错并返回错误原因
-            return HttpResponse(atricle_post_form.errors)
+            return HttpResponse('报错：%s' %atricle_post_form.errors)
     # 如果第一次匹配到url，用户还没有填写内容时，跳转到创建博客页面
     else:
         atricle_post_form = ArticlePostForm()
@@ -34,10 +34,13 @@ def article_query(request):
     if request.method == 'POST':
         query_title = request.POST.get('title', 0)
         article_list = Article.objects.filter(title = query_title)
-        # 按标题查询可能会查出多篇文章，目前暂时先只返回第一篇文章
-        article = article_list[0]
-        info_dict = {'title':article.title, 'body':article.body, 'created':article.created}
-        return render(request, 'article/show.html', info_dict)
+        if len(article_list) == 0:
+            return HttpResponse('没有查到标题为 %s 的文章' %query_title)
+        else:
+            # 按标题查询可能会查出多篇文章，目前暂时先只返回第一篇文章
+            # article = article_list[0]
+            # info_dict = {'id':article.id, 'title':article.title, 'body':article.body, 'created':article.created}
+            return render(request, 'article/show.html', {'article_list':article_list})
     else:
         return render(request, 'article/query.html')
 

@@ -4,8 +4,11 @@
     <title>豌豆帆 展示文章页面</title>
 </head>
 <body>
-<p>文章标题：{{title}}</p>
-<p>文章内容：{{body}}</p>
-<p>创建时间：{{created}}</p>
+{% for article in article_list %}
+<p>文章id：{{article.id}}</p>
+<p>文章标题：{{article.title}}</p>
+<p>文章内容：{{article.body}}</p>
+<p>创建时间：{{article.created}}</p>
+{% endfor %}
 </body>
 </html>
