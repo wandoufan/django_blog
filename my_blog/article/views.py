@@ -37,9 +37,6 @@ def article_query(request):
         if len(article_list) == 0:
             return HttpResponse('没有查到标题为 %s 的文章' % query_title)
         else:
-            # 按标题查询可能会查出多篇文章，目前暂时先只返回第一篇文章
-            # article = article_list[0]
-            # info_dict = {'id':article.id, 'title':article.title, 'body':article.body, 'created':article.created}
             info = '查询标题为 %s 的文章' % query_title
             return render(request, 'article/show.html', {'article_list': article_list, 'info': info})
     else:

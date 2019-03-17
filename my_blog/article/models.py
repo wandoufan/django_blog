@@ -24,4 +24,5 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        # 使显示信息为文章标题，而非一个'Article object'
         return self.title
