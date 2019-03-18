@@ -28,4 +28,5 @@ urlpatterns = [
     path('article-list/', article_views.article_list, name='article_list'),
     path('user-login/', user_views.user_login, name='user_login'),
     path('user-create/', user_views.user_create, name='user_create'),
+    path('user-logout/', user_views.user_logout, name='user_logout'),
 ]

@@ -43,4 +43,10 @@ def user_login(request):
     else:
         return render(request, 'user/login.html')
 
+def user_logout(request):
+    """
+    用户注销
+    """
+    logout(request)
+    return HttpResponse('注销成功')
 
