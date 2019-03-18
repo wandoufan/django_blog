@@ -15,7 +15,7 @@ class UserLoginForm(forms.Form):
         fields = ('username', 'password')
 
 
-# 用户注册表单，继承类
+# 用户注册表单，继承forms.ModelForm类
 class UserCreateForm(forms.ModelForm):
     class Meta:
         model = UserInfo

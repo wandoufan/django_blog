@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import User
 
 
-class UserInfo(AbstractUser):
+class UserInfo(User):
     """
     声明用户信息
     继承django模型自带的User类，并添加自定义的属性方法

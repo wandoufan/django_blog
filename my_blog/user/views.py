@@ -13,8 +13,7 @@ def user_create(request):
     if request.method == 'POST':
         user_create_form = UserCreateForm(request.POST)
         if user_create_form.is_valid():
-            # user = user_create_form.objects.create_user(username=request.POST['username'], password=request.POST['password'])
-            user_create_form.save()
+            user = UserInfo.objects.create_user(username=request.POST['username'], password=request.POST['password'])
             return HttpResponse('创建新用户成功')
         else:
             return HttpResponse('输入数据不合法：%s' % user_create_form.errors)
