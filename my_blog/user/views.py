@@ -20,9 +20,10 @@ def user_login(request):
         user_info_form = UserInfoForm(request.POST)
         if user_info_form.is_valid():
             # cleaned_data方法得到一个包含表单数据的字典结构
-            info = user_info_form.cleaned_data
+            # info = user_info_form.cleaned_data
             # 检查账户密码是否有效，并得到一个user对象
-            user = authenticate(username=info['username'], password=info['password'])
+            # user = authenticate(username=info['username'], password=info['password'])
+            user = authenticate(username=request.POST['username'], password=request.POST['password'])
             if user is not None:
                 # authenticate方法的返回值不为None说明账户有效，可以登录
                 login(request, user)

@@ -4,7 +4,7 @@ from .models import UserInfo
 
 
 # 用户的表单类
-class UserInfoForm(forms.ModelForm):
+class UserInfoForm(forms.Form):
     class Meta:
         # 指明数据模型来源
         model = UserInfo
