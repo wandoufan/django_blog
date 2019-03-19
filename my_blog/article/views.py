@@ -4,6 +4,9 @@ from .models import Article
 from .forms import ArticlePostForm
 # 引入login装饰器
 from django.contrib.auth.decorators import login_required
+import sys
+sys.path.append('../')
+from user.models import UserInfo
 
 
 @login_required
@@ -17,7 +20,12 @@ def article_create(request):
         atricle_post_form = ArticlePostForm(request.POST)
         # 判断提交数据是否合法
         if atricle_post_form.is_valid():
-            atricle_post_form.save()
+            # 保存数据，但暂时不提交到数据库中
+            article_temp = atricle_post_form.save(commit=False)
+            # 从UserInfo表中获取user对象作为Article表中的作者
+            article_temp.author = UserInfo.objects.get(name=request.user.username)
+            # 将文章数据保存到数据库
+            article_temp.save()
             return HttpResponse('数据已保存成功！')
         else:
             # 报错并返回错误原因
