@@ -1,9 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from django.urls import reverse
+import sys
+sys.path.append('../')
+from user.models import UserInfo
+# from django.urls import reverse
 # from taggit.managers import TaggableManager
-from PIL import Image
+# from PIL import Image
 
 
 class Article(models.Model):
@@ -13,7 +16,8 @@ class Article(models.Model):
     # 文章标题
     title = models.CharField(max_length=150)
     # 文章作者
-    # author = models.CharField(max_length=50)
+    # 通过外键与UserInfo模型关联
+    author = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
     # 文章正文
     body = models.TextField()
     # 文章创建时间

@@ -2,8 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Article
 from .forms import ArticlePostForm
+# 引入login装饰器
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def article_create(request):
     """
     创建博客文章
