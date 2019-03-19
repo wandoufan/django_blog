@@ -24,6 +24,8 @@ def article_create(request):
             article_temp = atricle_post_form.save(commit=False)
             # 从UserInfo表中获取user对象作为Article表中的作者
             article_temp.author = UserInfo.objects.get(username=request.user.username)
+            # print('UserInfo表中的用户：', UserInfo.objects.all())
+            # print('当前登录用户：', request.user.username)
             # 将文章数据保存到数据库
             article_temp.save()
             info = '文章已保存成功'
@@ -57,6 +59,7 @@ def article_query(request):
         return render(request, 'article/query.html')
 
 
+@login_required
 def article_delete(request):
     """
     删除博客文章
@@ -68,8 +71,14 @@ def article_delete(request):
             return HttpResponse('没有查到id为 %s 的文章' % str(delete_id))
         else:
             article = article_list[0]
-            article.delete()
-            return HttpResponse('标题为 %s 的文章删除成功' % article.title)
+            # print('文章作者：', article.author.username)
+            # print('当前登录账户：', request.user.username)
+            # 仅当文章创建者和当前登录账户一致时才有权限删除文章
+            if article.author.username == request.user.username:                
+                article.delete()
+                return HttpResponse('标题为 %s 的文章删除成功' % article.title)
+            else:
+                return HttpResponse('当前登录账户为%s, 无权限删除%s创建的文章' %(request.user.username, article.author.username))
     else:
         return render(request, 'article/delete.html')
 
