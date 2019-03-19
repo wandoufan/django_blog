@@ -23,10 +23,13 @@ def article_create(request):
             # 保存数据，但暂时不提交到数据库中
             article_temp = atricle_post_form.save(commit=False)
             # 从UserInfo表中获取user对象作为Article表中的作者
-            article_temp.author = UserInfo.objects.get(name=request.user.username)
+            article_temp.author = UserInfo.objects.get(username=request.user.username)
             # 将文章数据保存到数据库
             article_temp.save()
-            return HttpResponse('数据已保存成功！')
+            info = '文章已保存成功'
+            article_list = Article.objects.filter(id=article_temp.id)
+            return render(request, 'article/show.html', {'article_list': article_list, 'info': info})
+            # return HttpResponse('数据已保存成功！')
         else:
             # 报错并返回错误原因
             return HttpResponse('报错：%s' % atricle_post_form.errors)
