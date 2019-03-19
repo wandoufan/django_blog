@@ -83,6 +83,7 @@ def article_delete(request):
         return render(request, 'article/delete.html')
 
 
+@login_required
 def article_update(request):
     """
     修改博客文章
@@ -96,11 +97,18 @@ def article_update(request):
             return HttpResponse('没有查到id为 %s 的文章' % str(update_id))
         else:
             article = article_list[0]
-            article.title = update_title if update_title != '' else article.title
-            article.body = update_body if update_body != '' else article.body
-            article.save()
-            info = '修改id为 %s 的文章' % str(update_id)
-            return render(request, 'article/show.html', {'article_list': article_list, 'info': info})
+            # print('文章作者：', article.author.username)
+            # print('当前登录账户：', request.user.username)
+            # 仅当文章创建者和当前登录账户一致时才有权限删除文章
+            if article.author.username == request.user.username: 
+                # 当页面输入新的标题或文章内容时博客随之更新，当页面没有填写新内容时标题或文章内容保持不变
+                article.title = update_title if update_title != '' else article.title
+                article.body = update_body if update_body != '' else article.body
+                article.save()
+                info = '修改了id为 %s 的文章，新内容如下：' % str(update_id)
+                return render(request, 'article/show.html', {'article_list': article_list, 'info': info})
+            else:
+                return HttpResponse('当前登录账户为%s, 无权限修改%s创建的文章' %(request.user.username, article.author.username))
     else:
         return render(request, 'article/update.html')
 
@@ -110,10 +118,13 @@ def article_list(request):
     显示所有的博客文章
     """
     article_list = Article.objects.all()
-    info_list = []
-    for article in article_list:
-        info_dict = {'id': article.id, 'title': article.title, 'body': article.body, \
-        'created': article.created, 'updated': article.updated}
-        info_list.append(info_dict)
-    info = '所有博客文章如下所示：'
-    return render(request, 'article/list.html', {'info_list': info_list, 'info': info})
+    if len(article_list) == 0:
+        return HttpResponse('当前没有用户创建任何文章')
+    # info_list = []
+    # for article in article_list:
+    #     info_dict = {'id': article.id, 'title': article.title, 'body': article.body, \
+    #     'created': article.created, 'updated': article.updated}
+    #     info_list.append(info_dict)
+    else:
+        info = '所有博客文章如下所示：'
+        return render(request, 'article/list.html', {'article_list': article_list, 'info': info})
