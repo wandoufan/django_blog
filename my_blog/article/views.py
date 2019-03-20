@@ -120,11 +120,6 @@ def article_list(request):
     article_list = Article.objects.all()
     if len(article_list) == 0:
         return HttpResponse('当前没有用户创建任何文章')
-    # info_list = []
-    # for article in article_list:
-    #     info_dict = {'id': article.id, 'title': article.title, 'body': article.body, \
-    #     'created': article.created, 'updated': article.updated}
-    #     info_list.append(info_dict)
     else:
         info = '所有博客文章如下所示：'
         return render(request, 'article/list.html', {'article_list': article_list, 'info': info})

@@ -4,6 +4,9 @@ from .models import UserInfo
 from .forms import UserLoginForm
 from .forms import UserCreateForm
 from django.contrib.auth import authenticate, login, logout
+import sys
+sys.path.append('../')
+from article.models import Article
 
 
 def user_create(request):
@@ -20,6 +23,7 @@ def user_create(request):
     else:
         return render(request, 'user/create.html')
 
+
 def user_login(request):
     """
     用户登录
@@ -35,13 +39,17 @@ def user_login(request):
             if user is not None:
                 # authenticate方法的返回值不为None说明账户有效，可以登录
                 login(request, user)
-                return HttpResponse('登录成功')
+                # return HttpResponse('登录成功')
+                article_list = Article.objects.all()
+                info = '登录成功，当前文章列表：'
+                return render(request, 'article/list.html', {'article_list': article_list, 'info': info})
             else:
                 return HttpResponse('账户或密码有误')
         else:
             return HttpResponse('输入数据不合法：%s' % user_login_form.errors)
     else:
         return render(request, 'user/login.html')
+
 
 def user_logout(request):
     """
